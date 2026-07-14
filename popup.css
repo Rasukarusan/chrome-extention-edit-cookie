@@ -15,6 +15,8 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+[hidden] { display: none !important; }
+
 body {
   width: 420px;
   max-height: 580px;
@@ -33,6 +35,7 @@ body {
 
 /* ---- header ---- */
 .header {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -97,6 +100,7 @@ body {
 
 /* ---- search ---- */
 .search-row {
+  flex: none;
   position: relative;
   padding: 8px 12px;
 }
@@ -152,6 +156,7 @@ body {
 .empty .empty-icon { font-size: 34px; display: block; margin-bottom: 10px; opacity: 0.6; }
 
 .item {
+  flex: none;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -310,6 +315,7 @@ body {
 
 /* ---- import panel ---- */
 .import-panel {
+  flex: none;
   padding: 10px 12px;
   border-top: 1px solid var(--line);
   background: var(--surface);
@@ -333,6 +339,7 @@ body {
 
 /* ---- footer / toast ---- */
 .footer {
+  flex: none;
   padding: 7px 14px;
   border-top: 1px solid var(--line);
   font-size: 11px;
