@@ -282,6 +282,7 @@ body {
   gap: 8px;
   margin-top: 2px;
 }
+.item-actions .a-env { margin-right: auto; }
 
 .btn {
   padding: 6px 16px;

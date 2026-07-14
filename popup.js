@@ -190,6 +190,16 @@ function fillForm(node, cookie, isNew) {
 
   $('.a-save', node).addEventListener('click', () => saveCookie(isNew ? null : cookie, readForm()));
 
+  $('.a-env', node).addEventListener('click', async () => {
+    const name = f.name.value.trim();
+    if (!name && !f.value.value) {
+      toast('コピーする内容がありません', true);
+      return;
+    }
+    await navigator.clipboard.writeText(`${envKey(name)}=${f.value.value}`);
+    toast(`${envKey(name)} をenv形式でコピーしました`);
+  });
+
   const delBtn = $('.a-delete', node);
   if (isNew) {
     delBtn.textContent = 'キャンセル';
