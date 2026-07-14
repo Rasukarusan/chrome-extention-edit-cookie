@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Cookie Editor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <span class="brand-icon">🍪</span>
+      <div class="brand-text">
+        <h1>Cookie Editor</h1>
+        <span id="host" class="host"></span>
+      </div>
+    </div>
+    <div class="toolbar">
+      <button id="btn-add" class="tool" title="Cookieを追加">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <button id="btn-reload" class="tool" title="再読み込み">
+        <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5"/></svg>
+      </button>
+      <button id="btn-import" class="tool" title="インポート (JSON)">
+        <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+      </button>
+      <button id="btn-export" class="tool" title="エクスポート (JSONをコピー)">
+        <svg viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M4 21h16"/></svg>
+      </button>
+      <button id="btn-clear" class="tool danger" title="すべて削除">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="search-row">
+    <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input id="search" type="text" placeholder="Cookieを検索…" autocomplete="off">
+  </div>
+
+  <main id="list" class="list"></main>
+
+  <div id="import-panel" class="import-panel" hidden>
+    <p class="import-hint">CookieのJSON配列を貼り付けてください</p>
+    <textarea id="import-text" spellcheck="false" placeholder='[ { "name": "...", "value": "...", "domain": "..." } ]'></textarea>
+    <div class="import-actions">
+      <button id="btn-import-cancel" class="btn ghost">キャンセル</button>
+      <button id="btn-import-run" class="btn primary">インポート</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span id="count"></span>
+  </footer>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <template id="tpl-item">
+    <section class="item">
+      <button class="item-head">
+        <svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+        <span class="item-name"></span>
+        <span class="item-preview"></span>
+      </button>
+      <div class="item-body" hidden>
+        <label class="field">
+          <span>名前</span>
+          <input class="f-name" type="text" autocomplete="off" spellcheck="false">
+        </label>
+        <label class="field">
+          <span>値</span>
+          <textarea class="f-value" rows="3" spellcheck="false"></textarea>
+        </label>
+        <div class="field-row">
+          <label class="field grow">
+            <span>ドメイン</span>
+            <input class="f-domain" type="text" autocomplete="off" spellcheck="false">
+          </label>
+          <label class="check">
+            <input class="f-hostonly" type="checkbox"><span>ホストのみ</span>
+          </label>
+        </div>
+        <div class="field-row">
+          <label class="field grow">
+            <span>パス</span>
+            <input class="f-path" type="text" autocomplete="off" spellcheck="false">
+          </label>
+          <label class="field samesite">
+            <span>SameSite</span>
+            <select class="f-samesite">
+              <option value="unspecified">未指定</option>
+              <option value="lax">Lax</option>
+              <option value="strict">Strict</option>
+              <option value="no_restriction">None</option>
+            </select>
+          </label>
+        </div>
+        <div class="field-row">
+          <label class="field grow">
+            <span>有効期限</span>
+            <input class="f-expires" type="datetime-local" step="1">
+          </label>
+          <label class="check">
+            <input class="f-session" type="checkbox"><span>セッション</span>
+          </label>
+        </div>
+        <div class="flags">
+          <label class="check"><input class="f-secure" type="checkbox"><span>Secure</span></label>
+          <label class="check"><input class="f-httponly" type="checkbox"><span>HttpOnly</span></label>
+        </div>
+        <div class="item-actions">
+          <button class="btn danger a-delete">削除</button>
+          <button class="btn primary a-save">保存</button>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <script src="popup.js"></script>
+</body>
+</html>
