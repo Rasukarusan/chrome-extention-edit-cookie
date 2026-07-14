@@ -276,6 +276,20 @@ async function exportCookies() {
   toast(`${state.cookies.length} 件をクリップボードにコピーしました`);
 }
 
+function envKey(name) {
+  return name.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
+}
+
+async function exportEnv() {
+  if (!state.cookies.length) {
+    toast('コピーするCookieがありません', true);
+    return;
+  }
+  const text = state.cookies.map((c) => `${envKey(c.name)}=${c.value}`).join('\n');
+  await navigator.clipboard.writeText(text);
+  toast(`${state.cookies.length} 件をenv形式でコピーしました`);
+}
+
 async function importCookies(text) {
   let parsed;
   try {
@@ -337,6 +351,8 @@ $('#btn-add').addEventListener('click', () => {
 });
 
 $('#btn-export').addEventListener('click', () => exportCookies().catch((e) => toast(e.message, true)));
+
+$('#btn-env').addEventListener('click', () => exportEnv().catch((e) => toast(e.message, true)));
 
 $('#btn-import').addEventListener('click', () => {
   const panel = $('#import-panel');
